@@ -1,0 +1,11 @@
+*.save
+*.depend
+*.layout
+compiler.bmarks
+*.txt
+.git-auto
+bin
+ObjCode
+*.cbp
+*.html
+*.exe
