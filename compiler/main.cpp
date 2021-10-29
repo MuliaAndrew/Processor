@@ -8,23 +8,20 @@ int main(int argc, char* argv[])
 
     if (argc >= 2)
     {
-        strcpy((code_buf.file_name), argv[1]);
+        strcpy(code_buf.file_name, argv[1]);
         err = Text_Ctor(&code_buf);
     }
     else
     {
-        scanf("%s", (code_buf.file_name));
+        scanf("%s", code_buf.file_name);
         err = Text_Ctor(&code_buf);
     }
-    printf("%d\n", err.amt);
 
     err = Code_Parsing(&code_buf);
-    //printf("%d\n", err.amt);
 
     double* obj_code = (double*)calloc(code_buf.lxm_amt, sizeof(double));
 
     err = Compile(&code_buf, obj_code);
-    //printf("%d\n", err.amt);
 
     if (!Log_Error(&err))
         if (argc >= 3)

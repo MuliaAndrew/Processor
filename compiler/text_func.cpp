@@ -16,7 +16,10 @@ error_t Text_Ctor(text_t* code_buf)
     Ptr_Ver(code_buf->value, ERR);
 
     if (fread(code_buf->value, sizeof(char), code_buf->len, code) != (unsigned int)code_buf->len)
+    {    
+        printf("lol");
         ERR.value[ERR.amt++] = PTR_ERROR;
+    }
 
     fclose(code);
     return ERR;

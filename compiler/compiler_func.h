@@ -10,11 +10,15 @@
 
 #define Ptr_Ver(ptr, err)                                   \
     do                                                      \
-    {                                                       \
-        (err).value[(err).amt++] = PTR_ERROR;               \
+    {   													\
+    	if ((ptr) == nullptr)                               \
+        	(err).value[(err).amt++] = PTR_ERROR;           \
     } while(0)                                              \
 
 //----------------------------------------------------------------------------
+
+const int LABELS_AMOUNT  	= 100;
+const int LABEL_NAME_SIZE 	= 20;
 
 struct text_t
 {
@@ -25,12 +29,19 @@ struct text_t
     int   lxm_pos[MAX_LXM_AMT]  = {0};
 };
 
+struct label_t
+{
+	int ip 					= 0;
+	char name[LABEL_NAME_SIZE] 	= {};
+};
+
 //-----------------------------------------------------------------------------
 
 error_t Code_Parsing(text_t * buf);
 
 int Code_Divide(char* str);
 
+int Search_Label(char* str, label_t* label);
 
 error_t Compile(text_t* buf, double* obj_code);
 

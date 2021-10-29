@@ -20,7 +20,8 @@ enum prog_errors
     PTR_ERROR      = 1,
     NO_FILE_IN_DIR = 2,
 
-    LXM_ERROR      = 10
+    LXM_ERROR      = 10,
+    LABEL_ERROR	   = -1
 };
 
 #endif // ERRORS_H
