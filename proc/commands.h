@@ -1,7 +1,7 @@
 #ifndef COMMANDS_H
 #define COMMANDS_H
 
-const char version[]   = "1";
+const char version[]   = "2";
 const char extention[] = "aboba";
 
 enum cmd
@@ -19,7 +19,14 @@ enum cmd
     MUL             = 10,
     DIV             = 11,
     IN              = 12,
-    OUT             = 13
+    OUT             = 13,
+    JMP             = 14,
+    JA              = 15,
+    JAE             = 16,
+    JB              = 17,
+    JBE             = 18,
+    JNE             = 19,
+    JE              = 20
 };
 
 #endif // COMMANDS_H

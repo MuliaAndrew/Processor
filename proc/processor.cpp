@@ -29,7 +29,7 @@ error_t Code_Ctor(code_t* code, char* file_name)
 		return VERSION_ERROR;
 	}
 
-	code->val = (double*)calloc(MINSIZE, sizeof(double));
+	code->val = (data_t*)calloc(MINSIZE, sizeof(data_t));
 
 	/* fseek(code_file, 1, SEEK_CUR); 
 	int AA = ftell(code_file); 
@@ -40,9 +40,9 @@ error_t Code_Ctor(code_t* code, char* file_name)
 		if (code->size_ >= MINSIZE)
 		{
 			MINSIZE += SIZE_COEF;
-			realloc(code->val, MINSIZE);
+			code->val = (data_t*)realloc(code->val, MINSIZE);
 		}
-		code->size_++;
+        code->size_++;
 	}
 
 	fclose(code_file);
@@ -62,11 +62,11 @@ error_t Processor(code_t* code)
 
     while (true)
     {
-    	switch ((int)code->val[ip])
+        switch ((int)code->val[ip])
     	{
-    		case PUSHREG:
+            case PUSHREG:
     		{
-    			Stack_Push(&stack, reg[(int)code->val[++ip]]);
+                Stack_Push(&stack, reg[(int)code->val[++ip]]);
    				break;
     		}
     		case PUSHRAMREG:
@@ -140,6 +140,53 @@ error_t Processor(code_t* code)
     			printf("%lg\n", arg);
     			break;
     		}
+            case JMP:
+            {
+                ip = (int)code->val[++ip];
+                break;
+            }
+            case JA:
+            {
+                if (Stack_Pop(&stack) > Stack_Pop(&stack))
+                    ip = (int)code->val[++ip];
+
+                break;
+            }
+            case JAE:
+            {
+                 if (Stack_Pop(&stack) >= Stack_Pop(&stack))
+                    ip = (int)code->val[++ip];
+
+                break;
+            }
+            case JB:
+            {
+                 if (Stack_Pop(&stack) < Stack_Pop(&stack))
+                    ip = (int)code->val[++ip];
+
+                break;
+            }
+            case JBE:
+            {
+                 if (Stack_Pop(&stack) <= Stack_Pop(&stack))
+                    ip = (int)code->val[++ip];
+
+                break;
+            }
+            case JNE:
+            {
+                 if (Stack_Pop(&stack) != Stack_Pop(&stack))
+                    ip = (int)code->val[++ip];
+
+                break;
+            }
+            case JE:
+            {
+                 if (Stack_Pop(&stack) == Stack_Pop(&stack))
+                    ip = (int)code->val[++ip];
+
+                break;
+            }
     		case HLT:
     			return NO_ERROR;
     	}
